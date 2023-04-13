@@ -42,6 +42,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import io.cloudevents.CloudEvent;
 import io.cloudevents.core.format.EventFormat;
@@ -55,7 +56,7 @@ import com.google.common.base.Preconditions;
  *
  * @since 1.3.0
  */
-public class CloudEventsProtocolAdaptor<T extends ProtocolTransportObject>
+public class CloudEventsProtocolAdaptor
     implements ProtocolAdaptor<ProtocolTransportObject> {
 
     @Override
@@ -118,7 +119,7 @@ public class CloudEventsProtocolAdaptor<T extends ProtocolTransportObject>
     @Override
     public ProtocolTransportObject fromCloudEvent(CloudEvent cloudEvent) throws ProtocolHandleException {
         Preconditions.checkNotNull(cloudEvent, "cloudEvent cannot be null");
-        String protocolDesc = cloudEvent.getExtension(Constants.PROTOCOL_DESC).toString();
+        String protocolDesc = Objects.requireNonNull(cloudEvent.getExtension(Constants.PROTOCOL_DESC)).toString();
         if (StringUtils.equals("http", protocolDesc)) {
             HttpCommand httpCommand = new HttpCommand();
             Body body = new Body() {
@@ -127,7 +128,7 @@ public class CloudEventsProtocolAdaptor<T extends ProtocolTransportObject>
                 @Override
                 public Map<String, Object> toMap() {
                     byte[] eventByte =
-                        EventFormatProvider.getInstance().resolveFormat(JsonFormat.CONTENT_TYPE).serialize(cloudEvent);
+                        Objects.requireNonNull(EventFormatProvider.getInstance().resolveFormat(JsonFormat.CONTENT_TYPE)).serialize(cloudEvent);
                     map.put("content", new String(eventByte, StandardCharsets.UTF_8));
                     return map;
                 }
