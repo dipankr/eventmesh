@@ -19,11 +19,11 @@ package org.apache.eventmesh.runtime.core.protocol.tcp.client.session.send;
 
 public class EventMeshTcpSendResult {
 
-    private final String seq;
+    private String seq;
 
-    private final EventMeshTcpSendStatus sendStatus;
+    private EventMeshTcpSendStatus sendStatus;
 
-    private final String detail;
+    private String detail;
 
     public EventMeshTcpSendResult(String seq, EventMeshTcpSendStatus sendStatus, String detail) {
         this.seq = seq;

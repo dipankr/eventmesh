@@ -47,12 +47,12 @@ public class DownStreamMsgContext extends RetryContext {
     @Setter
     private Session session;
 
-    private final AbstractContext consumeConcurrentlyContext;
+    private AbstractContext consumeConcurrentlyContext;
 
-    private final MQConsumerWrapper consumer;
+    private MQConsumerWrapper consumer;
 
     @Getter
-    private final SubscriptionItem subscriptionItem;
+    private SubscriptionItem subscriptionItem;
 
     private long lastPushTime;
 
@@ -60,7 +60,7 @@ public class DownStreamMsgContext extends RetryContext {
 
     private final long expireTime;
 
-    public final boolean msgFromOtherEventMesh;
+    public boolean msgFromOtherEventMesh;
 
     public DownStreamMsgContext(CloudEvent event, Session session, MQConsumerWrapper consumer,
         AbstractContext consumeConcurrentlyContext, boolean msgFromOtherEventMesh,

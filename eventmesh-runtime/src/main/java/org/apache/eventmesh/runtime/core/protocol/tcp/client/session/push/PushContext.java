@@ -31,15 +31,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PushContext {
 
-    private final SessionPusher sessionPusher;
+    private SessionPusher sessionPusher;
 
-    public final AtomicLong deliveredMsgsCount = new AtomicLong(0);
+    public AtomicLong deliveredMsgsCount = new AtomicLong(0);
 
-    public final AtomicLong deliverFailMsgsCount = new AtomicLong(0);
+    public AtomicLong deliverFailMsgsCount = new AtomicLong(0);
 
-    private final ConcurrentHashMap<String /* seq */, DownStreamMsgContext> unAckMsg = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String /** seq */, DownStreamMsgContext> unAckMsg = new ConcurrentHashMap<String, DownStreamMsgContext>();
 
-    private final long createTime = System.currentTimeMillis();
+    private long createTime = System.currentTimeMillis();
 
     public PushContext(SessionPusher sessionPusher) {
         this.sessionPusher = sessionPusher;
